@@ -13,6 +13,7 @@ Usage :-
 Press LALT to activate the character switch.
 
 Configuration :-
+
 In order to change skins, edit the CS.pwn and make the changes in the lines below.
 #define SKIN1   10
 #define SKIN2   50
@@ -23,6 +24,7 @@ Change those lines above to your needs. And to change the position, head over to
 SetPlayerPos lines.
 
 Audio soundpacks :-
+
 In order to use the audio soundpack of GTA V, you will need audio plugin for instant starting of audio to make no delay in the sounds.
 Download the audiopacks folder and place it in your samp-server directory, and in audio.ini make the following changes.
 
