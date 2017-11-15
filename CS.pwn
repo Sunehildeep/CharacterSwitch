@@ -28,14 +28,10 @@
 #include <fader>
 
 // Script (Configurations)
+// Skins Ids (Skin1, Skin2, Skin3, Skin4)
+static u_Skin[4] = {10, 50, 100, 111};
 const
-	
-	// Skins Ids
-	u_Skin[0] = 10, 
-	u_Skin[1] = 50,
-	u_Skin[2] = 100,
-	u_Skin[3] = 111,
-	
+
 	// Max Slots
 	s_MaxSlots = 100,
 	
@@ -50,9 +46,9 @@ const
 new 
 
 	Float:PlayerPosition[MAX_PLAYERS][3],
-	Float:CameraPositions[MAX_PLAYERS][3],
+	Float:CameraPosition[MAX_PLAYERS][3],
 	Text:g_TextDraw[6],
-	PlayerText:p_TextDraw[4][MAX_PLAYERS],
+	PlayerText:p_TextDraw[MAX_PLAYERS][4],
 	Audio_Handle[MAX_PLAYERS]
 	
 ;
@@ -61,8 +57,8 @@ new
 #define PRESSED(%0) \
 	(((newkeys & (%0)) == (%0)) && ((oldkeys & (%0)) != (%0)))
 
-#define Audio_PlayEx(%0,%1) Audio_Stop(%0,%1), Audio_Handle[%0] = Audio_Play(playerid,%1);
-#define FlashPlayerScreen(%0) TextDrawFadeBoxForPlayer(playerid, g__TextDraw[5], 0xFF5F8E74, 0xFF5F8E74, 10, 1000);
+#define Audio_PlayEx(%0,%1) Audio_Stop(%0,%1), Audio_Handle[%0] = Audio_Play(playerid,%1)
+#define FlashPlayerScreen(%0) TextDrawFadeBoxForPlayer(playerid, g_TextDraw[5], 0xFF5F8E74, 0xFF5F8E74, 10, 1000)
  
 // Script (Callbacks)
 public OnFilterScriptInit()
@@ -115,48 +111,48 @@ public OnPlayerConnect(playerid)
 {
 	Audio_Handle[playerid] = -1;
 	
-	p_TextDraw[0][playerid] = CreatePlayerTextDraw(playerid, 541.000000, 338.000000, "HUD:radar_burgershot");
-	p_TextDraw[2][playerid] = CreatePlayerTextDraw(playerid, 543.000000, 377.000000, "HUD:radar_burgershot");
+	p_TextDraw[playerid][0] = CreatePlayerTextDraw(playerid, 541.000000, 338.000000, "HUD:radar_burgershot");
+	p_TextDraw[playerid][2] = CreatePlayerTextDraw(playerid, 543.000000, 377.000000, "HUD:radar_burgershot");
 	for(new i = 0; i < 3; i++)
 	{
 		if(i == 1) continue;
-		PlayerTextDrawFont(playerid, p_TextDraw[2][playerid], 5);
-		PlayerTextDrawLetterSize(playerid, p_TextDraw[2][playerid], 0.600000, 2.000000);
-		PlayerTextDrawTextSize(playerid, p_TextDraw[2][playerid], 35.500000, 30.500000);
-		PlayerTextDrawSetOutline(playerid, p_TextDraw[2][playerid], 1);
-		PlayerTextDrawSetShadow(playerid, p_TextDraw[2][playerid], 0);
-		PlayerTextDrawAlignment(playerid, p_TextDraw[2][playerid], 1);
-		PlayerTextDrawColor(playerid, p_TextDraw[2][playerid], -1094795521);
-		PlayerTextDrawBackgroundColor(playerid, p_TextDraw[2][playerid], -256);
-		PlayerTextDrawBoxColor(playerid, p_TextDraw[2][playerid], -741092558);
-		PlayerTextDrawUseBox(playerid, p_TextDraw[2][playerid], 1);
-		PlayerTextDrawSetProportional(playerid, p_TextDraw[2][playerid], 1);
-		PlayerTextDrawSetSelectable(playerid, p_TextDraw[2][playerid], 1);
-		PlayerTextDrawSetPreviewModel(playerid, p_TextDraw[2][playerid], u_Skin[i]);
-		PlayerTextDrawSetPreviewRot(playerid, p_TextDraw[2][playerid], -10.000000, 0.000000, -20.000000, 0.780000);
-		PlayerTextDrawSetPreviewVehCol(playerid, p_TextDraw[2][playerid], 18, 1);
+		PlayerTextDrawFont(playerid, p_TextDraw[playerid][2], 5);
+		PlayerTextDrawLetterSize(playerid, p_TextDraw[playerid][2], 0.600000, 2.000000);
+		PlayerTextDrawTextSize(playerid, p_TextDraw[playerid][2], 35.500000, 30.500000);
+		PlayerTextDrawSetOutline(playerid, p_TextDraw[playerid][2], 1);
+		PlayerTextDrawSetShadow(playerid, p_TextDraw[playerid][2], 0);
+		PlayerTextDrawAlignment(playerid, p_TextDraw[playerid][2], 1);
+		PlayerTextDrawColor(playerid, p_TextDraw[playerid][2], -1094795521);
+		PlayerTextDrawBackgroundColor(playerid, p_TextDraw[playerid][2], -256);
+		PlayerTextDrawBoxColor(playerid, p_TextDraw[playerid][2], -741092558);
+		PlayerTextDrawUseBox(playerid, p_TextDraw[playerid][2], 1);
+		PlayerTextDrawSetProportional(playerid, p_TextDraw[playerid][2], 1);
+		PlayerTextDrawSetSelectable(playerid, p_TextDraw[playerid][2], 1);
+		PlayerTextDrawSetPreviewModel(playerid, p_TextDraw[playerid][2], u_Skin[i]);
+		PlayerTextDrawSetPreviewRot(playerid, p_TextDraw[playerid][2], -10.000000, 0.000000, -20.000000, 0.780000);
+		PlayerTextDrawSetPreviewVehCol(playerid, p_TextDraw[playerid][2], 18, 1);
 	}
 	
-	p_TextDraw[3][playerid] = CreatePlayerTextDraw(playerid, 577.000000, 371.000000, "HUD:radar_burgershot");
-	p_TextDraw[1][playerid] = CreatePlayerTextDraw(playerid, 574.000000, 332.000000, "HUD:radar_burgershot");
+	p_TextDraw[playerid][3] = CreatePlayerTextDraw(playerid, 577.000000, 371.000000, "HUD:radar_burgershot");
+	p_TextDraw[playerid][1] = CreatePlayerTextDraw(playerid, 574.000000, 332.000000, "HUD:radar_burgershot");
 	for(new i = 1; i < 4; i++)
 	{
 		if(i == 2) continue;
-		PlayerTextDrawFont(playerid, p_TextDraw[1][playerid], 5);
-		PlayerTextDrawLetterSize(playerid, p_TextDraw[1][playerid], 0.600000, 2.000000);
-		PlayerTextDrawTextSize(playerid, p_TextDraw[1][playerid], 37.000000, 40.000000);
-		PlayerTextDrawSetOutline(playerid, p_TextDraw[1][playerid], 1);
-		PlayerTextDrawSetShadow(playerid, p_TextDraw[1][playerid], 0);
-		PlayerTextDrawAlignment(playerid, p_TextDraw[1][playerid], 1);
-		PlayerTextDrawColor(playerid, p_TextDraw[1][playerid], -1);
-		PlayerTextDrawBackgroundColor(playerid, p_TextDraw[1][playerid], 0);
-		PlayerTextDrawBoxColor(playerid, p_TextDraw[1][playerid], 50);
-		PlayerTextDrawUseBox(playerid, p_TextDraw[1][playerid], 1);
-		PlayerTextDrawSetProportional(playerid, p_TextDraw[1][playerid], 1);
-		PlayerTextDrawSetSelectable(playerid, p_TextDraw[1][playerid], 1);
-		PlayerTextDrawSetPreviewModel(playerid, p_TextDraw[1][playerid], u_Skin[i]);
-		PlayerTextDrawSetPreviewRot(playerid, p_TextDraw[1][playerid], -10.000000, 0.000000, -20.000000, 1.000000);
-		PlayerTextDrawSetPreviewVehCol(playerid, p_TextDraw[1][playerid], 1, 1);
+		PlayerTextDrawFont(playerid, p_TextDraw[playerid][1], 5);
+		PlayerTextDrawLetterSize(playerid, p_TextDraw[playerid][1], 0.600000, 2.000000);
+		PlayerTextDrawTextSize(playerid, p_TextDraw[playerid][1], 37.000000, 40.000000);
+		PlayerTextDrawSetOutline(playerid, p_TextDraw[playerid][1], 1);
+		PlayerTextDrawSetShadow(playerid, p_TextDraw[playerid][1], 0);
+		PlayerTextDrawAlignment(playerid, p_TextDraw[playerid][1], 1);
+		PlayerTextDrawColor(playerid, p_TextDraw[playerid][1], -1);
+		PlayerTextDrawBackgroundColor(playerid, p_TextDraw[playerid][1], 0);
+		PlayerTextDrawBoxColor(playerid, p_TextDraw[playerid][1], 50);
+		PlayerTextDrawUseBox(playerid, p_TextDraw[playerid][1], 1);
+		PlayerTextDrawSetProportional(playerid, p_TextDraw[playerid][1], 1);
+		PlayerTextDrawSetSelectable(playerid, p_TextDraw[playerid][1], 1);
+		PlayerTextDrawSetPreviewModel(playerid, p_TextDraw[playerid][1], u_Skin[i]);
+		PlayerTextDrawSetPreviewRot(playerid, p_TextDraw[playerid][1], -10.000000, 0.000000, -20.000000, 1.000000);
+		PlayerTextDrawSetPreviewVehCol(playerid, p_TextDraw[playerid][1], 1, 1);
 	}
 
 	return 1;
@@ -199,34 +195,40 @@ public Audio_OnClientConnect(playerid)
 
 public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 {
-	switch(playertextid)
+	new id = -1;
+	for(new i = 0; i < 4; i++)
 	{
-		case p_TextDraw[0][playerid]:
+	    if(playertextid == p_TextDraw[playerid][i])
+	    {
+			id = i;
+   			break;
+	    }
+	}
+	if(id == -1) return printf("Something went wrrong while prasing the playertextdraw id: OnPlayerClickPlayerTextDraw(%d, %d)", playerid, _:playertextid);
+	switch(id)
+	{
+		case 0:
 		{
 			SetPlayerPos(playerid, -2596.6675,1358.2278,6.6957);
 			SetPlayerFacingAngle(playerid, 71.2003);
-			SetPlayerSkin(playerid, u_Skin[0]);
 		}
-		case p_TextDraw[1][playerid]:
+		case 1:
 		{
-			SwitchCharacter(playerid, 1, 718.4906, -1477.3024, 5.4688, 357.9947);
 			SetPlayerPos(playerid, 718.4906, -1477.3024, 5.4688);
 			SetPlayerFacingAngle(playerid, 357.9947);
-			SetPlayerSkin(playerid, u_Skin[1]);
 		}
-		case p_TextDraw[2][playerid]:
+		case 2:
 		{
 			SetPlayerPos(playerid, 1241.2084, -2057.6521, 60.0190); 
 			SetPlayerFacingAngle(playerid, 94.9352);
-			SetPlayerSkin(playerid, u_Skin[2]);
 		}
-		case p_TextDraw[3][playerid]:
+		case 3:
 		{
 			SetPlayerPos(playerid, 1249.7258, -2047.9263, 59.9209);
 			SetPlayerFacingAngle(playerid, 90.2055);
-			SetPlayerSkin(playerid, u_Skin[3]);
 		}
 	}
+	SetPlayerSkin(playerid, u_Skin[id]);
 	GetPlayerCameraPos(playerid, CameraPosition[playerid][0], CameraPosition[playerid][1], CameraPosition[playerid][2]);
 	SwitchCharacter(playerid, 1);
 	return 1;
@@ -247,8 +249,9 @@ public SwitchCharacter(playerid, level)
 			
             GetPlayerPos(playerid, PlayerPosition[playerid][0], PlayerPosition[playerid][1], PlayerPosition[playerid][2]);
             TogglePlayerControllable(playerid, 0);
-            InterpolateCameraPos(playerid, PlayerPosition[playerid][0], PlayerPosition[playerid][1], PlayerPosition[playerid][2]+20, 600, CAMERA_MOVE);
-            SetTimerEx("SwitchCharacter", 1000, false, "ii", playerid, 2);
+            InterpolateCameraPos(playerid, PlayerPosition[playerid][0], PlayerPosition[playerid][1], PlayerPosition[playerid][2], PlayerPosition[playerid][0], PlayerPosition[playerid][1], PlayerPosition[playerid][2]+20, 600, CAMERA_MOVE);
+			SetPlayerCameraLookAt(playerid, PlayerPosition[playerid][0], PlayerPosition[playerid][1], PlayerPosition[playerid][2]);
+			SetTimerEx("SwitchCharacter", 1000, false, "ii", playerid, 2);
             HideTDS(playerid);
         }
         case 2..4:
@@ -259,7 +262,7 @@ public SwitchCharacter(playerid, level)
         }
         case 5:
         {	
-			new Pos[3];
+			new Float:Pos[3];
 			GetPlayerPos(playerid, Pos[0], Pos[1], Pos[2]);
             InterpolateCameraPos(playerid, PlayerPosition[playerid][0], PlayerPosition[playerid][1], PlayerPosition[playerid][2]+200, Pos[0], Pos[1], Pos[2]+200, 3000, CAMERA_MOVE);
             InterpolateCameraLookAt(playerid, PlayerPosition[playerid][0], PlayerPosition[playerid][1], PlayerPosition[playerid][2], Pos[0], Pos[1], Pos[2], 3000, CAMERA_MOVE);
@@ -277,7 +280,7 @@ public SwitchCharacter(playerid, level)
         {
 			InterpolateCameraPos(playerid, PlayerPosition[playerid][0], PlayerPosition[playerid][1], PlayerPosition[playerid][2]+50, CameraPosition[playerid][0], CameraPosition[playerid][1], CameraPosition[playerid][2], 1000, CAMERA_MOVE);
 			InterpolateCameraLookAt(playerid, PlayerPosition[playerid][0], PlayerPosition[playerid][1], PlayerPosition[playerid][2], CameraPosition[playerid][0], CameraPosition[playerid][1], CameraPosition[playerid][2], 1000, CAMERA_MOVE);
-			SetTimerEx("SetCameraBehindPlayerEx", 1000, false);
+			SetTimerEx("SetCameraBehindPlayerEx", 1000, false, "i", playerid);
         }
     }
     return true;
