@@ -1,3 +1,5 @@
+### This is a filterscript for SA:MP servers which allows a GTA 5 kind of character switching in-game.
+
 Steps to install :-
 
 1. Place the CS.pwn into /filterscripts folder.
