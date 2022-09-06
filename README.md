@@ -1,5 +1,5 @@
 # Character Switch
-### This is a filterscript for SA:MP servers which allows a GTA 5 kind of character switching in-game.#
+### This is a filterscript for SA:MP servers which allows a GTA 5 kind of character switching in-game.
 
 Steps to install :-
 
