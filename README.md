@@ -7,7 +7,7 @@ Steps to install :-
 2. Compile it.
 3. Navigate to the root folder and open server.cfg
 4. In filterscripts line, add 'CS'
-5. You have successfully loaded the Event System now.
+5. You have successfully loaded the CharacterSwitch now.
 
 Found a bug? Feel free to open an issue here -: https://github.com/Sunehildeep/CharacterSwitch/issues
 
